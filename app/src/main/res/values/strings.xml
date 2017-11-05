@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BallApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="value">Score: </string>
+    <string name="pseudo">Pseudo: </string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_add">Ajouter</string>
+    <string name="action_edit">Editer</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Sauvegarder</string>
+    <string name="over">Game Over</string>
+    <string name="scoreTab">Afficher les Scores</string>
+</resources>
