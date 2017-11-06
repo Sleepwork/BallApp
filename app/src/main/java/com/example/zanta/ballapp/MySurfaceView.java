@@ -72,9 +72,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public void setGameRunning(boolean running){
         gameRunning = running;
     }
-    public int getScore(){
-        return score;
-    }
     public boolean isGameOver(){return (gameOverIntent != null);}
 
 
