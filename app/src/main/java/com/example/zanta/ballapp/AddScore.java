@@ -66,8 +66,6 @@ public class AddScore extends Activity implements LocationListener{
         this.editScore = (EditText) findViewById(R.id.editScore);
         this.editPseudo = (EditText) findViewById(R.id.editPseudo);
 
-
-        //if()
         //Button Listeners
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,9 +80,6 @@ public class AddScore extends Activity implements LocationListener{
                     intent.putExtra("score", editScore.getText().toString());
                 }
 
-                //Toast.makeText(getBaseContext(), editScore.getText().toString(), Toast.LENGTH_LONG).show();
-
-
                 if (ContextCompat.checkSelfPermission(me.getApplicationContext(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -97,13 +92,10 @@ public class AddScore extends Activity implements LocationListener{
                 }
 
                 if (mLocationPermissionGranted) {
-                    Log.i("Is Provider: ", ""+locationManager.isProviderEnabled(locationProvider));
                     mLastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
                     if(mLastKnownLocation!=null) {
                         intent.putExtra("lat", mLastKnownLocation.getLatitude());
                         intent.putExtra("lng", mLastKnownLocation.getLongitude());
-                        Log.i("lat", "" + mLastKnownLocation.getLatitude());
-                        Log.i("lng", "" + mLastKnownLocation.getLongitude());
                     }
                 }
 
