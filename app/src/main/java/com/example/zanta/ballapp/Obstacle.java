@@ -31,8 +31,6 @@ public class Obstacle extends Thread{
         int choice = Math.round((float)Math.random() * (3 - 1) + 1);
         int blockWidth = 0;
 
-        Log.i("Obstacle", ""+choice);
-
         switch(choice){
             case 1:
                 spacing = 50;
@@ -111,8 +109,6 @@ public class Obstacle extends Thread{
         if(distTop > distBottom)
             closest = bottom + ballSize;
 
-        //Log.i("moveBall", "" + posY + "------"+ closest);
-
         return closest;
     }
 
@@ -124,7 +120,7 @@ public class Obstacle extends Thread{
                 synchronized (mapBlock) {
                     newMap.putAll(mapBlock);
                 }
-                //Log.i("Obstacle run: ", "" + newMap.size());
+
                 Set<Map.Entry<Integer, Block>> set = newMap.entrySet();
                 Iterator<Map.Entry<Integer, Block>> it = set.iterator();
 
@@ -134,12 +130,10 @@ public class Obstacle extends Thread{
                     b.moveForward(speed, direction);
 
                     if (oldest == b.getId()) { //The oldest
-                        //Log.i("Obstacle run", "almost old");
                         if (direction) {
                             if (b.getL() >= widthTotal+spacing) {
                                 synchronized (mapBlock) {
                                     mapBlock.remove(entry.getKey());
-                                    //Log.i("Obstacle run: ", "old one ");
                                 }
                                 oldest++;
                             }
@@ -147,15 +141,12 @@ public class Obstacle extends Thread{
                             if (b.getR() <= -spacing) {
                                 synchronized (mapBlock) {
                                     mapBlock.remove(entry.getKey());
-                                    //Log.i("Obstacle run: ", "old one ");
                                 }
                                 oldest++;
                             }
                         }
                     }
-                    //Log.i("Obstacle run: ", "test one " + (b.getL() >= spacing) +"-"+ b.youth);
-                    //Log.i("Obstacle run: ", "" + i + "-----" + mapBlock.size());
-                    //Log.i("Obstacle run: ", "" + (i == mapBlock.size()));
+
                     if (youngest == b.getId()) { // The youngest
                         if (direction) {
                             if (b.getL() >= spacing && b.isYoungest()) {
@@ -163,7 +154,6 @@ public class Obstacle extends Thread{
                                 youngest++;
                                 synchronized (mapBlock) {
                                     mapBlock.put(newB.getId(), newB);
-                                    //Log.i("Obstacle run: ", "new one ");
                                 }
                             }
                         } else {
@@ -172,7 +162,6 @@ public class Obstacle extends Thread{
                                 youngest++;
                                 synchronized (mapBlock) {
                                     mapBlock.put(newB.getId(), newB);
-                                    //Log.i("Obstacle run: ", "new one ");
                                 }
                             }
                         }

@@ -30,10 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
 
         surfView = (MySurfaceView)  findViewById(R.id.surfaceView);
         sView = (SensorEventListener) findViewById(R.id.surfaceView);
@@ -55,30 +52,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         switch(id){
             case R.id.scoreTab:
                 Intent intent = new Intent(this, ScoreActivity.class);
                 startActivity(intent);
                 break;
-            /*case android.R.id.home:
-                if (accelSupported)
-                    manager.unregisterListener(sView, mSensor);
-                surfView.stopDrawing();
-                this.finish();
-                break;*/
             default:
                 break;
         }

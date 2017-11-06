@@ -56,7 +56,6 @@ public class ScoreActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mySweetHeart = (ListView) findViewById(R.id.list);
-        //registerForContextMenu(mySweetHeart);
         mFileOutPut = new File(getBaseContext().getFilesDir(), "listScores.xml");
         Log.i("onCreated" , "drop the bass ");
 
@@ -91,12 +90,8 @@ public class ScoreActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         switch(id){
             case android.R.id.home:
                 this.finish();
@@ -200,11 +195,9 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     public void loadXml(){
-        Log.i("loadXml", "Existence:  " +mFileOutPut.exists());
         if(!mFileOutPut.exists()) {
             try {
                 XmlPullParser xmlPullParser = getResources().getXml(R.xml.scores);
-                //Log.i("onCreate" ,getResources().getXml(R.xml.scores).getNamespace());
                 while (xmlPullParser.getEventType() != XmlPullParser.END_DOCUMENT) {
                     if (xmlPullParser.getEventType() == XmlPullParser.START_TAG) {
                         if (xmlPullParser.getName().equals("score")) {
@@ -233,7 +226,6 @@ public class ScoreActivity extends AppCompatActivity {
 
         } else {
             try {
-                Log.i("loadXml", "FileInput open");
                 InputStream inputStream = new FileInputStream(mFileOutPut);
                 XmlPullParser parser = Xml.newPullParser();
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -253,7 +245,6 @@ public class ScoreActivity extends AppCompatActivity {
                     parser.next();
                 }
                 inputStream.close();
-                Log.i("loadXml", "FileIntput close");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Log.i("loadXml", e.getMessage());
@@ -288,10 +279,8 @@ public class ScoreActivity extends AppCompatActivity {
 
         int i=1;
         for(Map<String, String> myMap : calls){
-
             myMap.remove("ligne3");
             myMap.put("ligne3", ""+i);
-            Log.i("sortList : ", myMap.get("ligne3") + " - " + myMap.get("ligne1"));
             i++;
         }
         list = calls;
@@ -302,7 +291,6 @@ public class ScoreActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy(){
-        Log.i("onDestroy", "here");
         saveXml();
         legendMusic.stop();
         legendMusic.release();

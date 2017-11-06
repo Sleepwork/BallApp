@@ -7,15 +7,10 @@ import android.util.Log;
  */
 
 public class Block {
-    //private int top, bottom;
     private int left, right, id, ballSize;
     private boolean youth;
 
     public Block(int l,int r, int ballS, int generateId){
-
-        //top = t;
-       // bottom = b;
-
         left = l;
         right = r;
         youth = true;
@@ -33,13 +28,6 @@ public class Block {
         }
     }
 
-    /*public int getT(){
-        return top;
-    }*/
-
-   /* public int getB(){
-        return bottom;
-    }*/
 
     public int getL(){
         return left;
@@ -68,13 +56,10 @@ public class Block {
         if(distLeft > distRight)
             closest = right + ballSize + 1;
 
-        //Log.i("moveBall", ""+ left + "------"+right);
-
         return closest;
     }
 
     public boolean isYoungest(){
-        //Log.i("Block", "call");
         boolean oldYouth = youth;
         if(youth)
             youth = false;

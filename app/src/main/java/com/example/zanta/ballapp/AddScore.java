@@ -37,7 +37,6 @@ public class AddScore extends Activity implements LocationListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        //Intent intent = getIntent();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider  = LocationManager.GPS_PROVIDER;
@@ -159,8 +158,6 @@ public class AddScore extends Activity implements LocationListener{
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 

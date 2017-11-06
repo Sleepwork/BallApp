@@ -24,10 +24,22 @@ import java.util.Set;
 
 /**
  * Created by Zanta on 10/10/2017.
+ * Layout de l'activité MatinActivity
+ * Permet de gérer le dessin de la balle et des obstacles
  */
 
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener {
 
+    /**
+     * ATTRIBUTS
+     * posX, posY, speed --> Coordonnées de la balle et vitesse de deplacement
+     * xVal, yVal --> coordonnées de déplacement de la balle
+     * blockStuckIndex --> ID du bloc responsable de la collision
+     * gameOverIntent --> intent initialisé après avoir perdu, envoi vers GameOverActivity
+     * DrawingThread --> Processus gérant le rafraichissement de l'image
+     * stuckVertical, stuckHorizontal --> possible collision avec le bloc dans la direction indiqué
+     * goDown --> permet de savoir ou se trouve la zone de "touchdown"
+     */
     private float posX, posY, speed;
     private int xVal, yVal, yStep, score, nbObstacles, ballSize, blockStuckIndex;
     private boolean stuckHorizontal ,stuckVertical, goDown;
@@ -36,15 +48,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     private Intent gameOverIntent;
     private Context myContext;
     private ArrayList<Obstacle> listObstacle;
-
-
-    // Le holder
     private SurfaceHolder mSurfaceHolder;
-
-    // Le thread dans lequel le dessin se fera
     private DrawingThread mThread;
-
-    //private Obstacle obstacle;
 
     public MySurfaceView (Context context, @Nullable AttributeSet attrs) {
 
@@ -64,15 +69,18 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         gameOverIntent = null;
     }
 
+    //Définit ou Vérifie si le jeu est en cours
     public boolean isGameRunning(){
         return gameRunning;
     }
     public void setGameRunning(boolean running){
         gameRunning = running;
     }
+
+    //Le jeu est-il terminé?
     public boolean isGameOver(){return (gameOverIntent != null);}
 
-
+    //Arreter la musique en cours
     public void stopMusic(){
         if(scoreMusic.isPlaying())
             scoreMusic.stop();
@@ -84,8 +92,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             mainMusic.pause();
     }
 
+    //Effacer toutes les musiques
     public void releaseMusic(){
-
         if(mainMusic.isPlaying())
             mainMusic.stop();
 
@@ -94,6 +102,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         scoreMusic.release();
     }
 
+    //Lorsque le joueur a perdu
     public void gameOver(){
 
         deathMusic.start();
@@ -113,6 +122,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
+    //Permet d'obtenir l'index de l'obstacle le plus proche de la balle
     public int getClosestObstacle(final float currentPosY){
         ArrayList<Obstacle> sortObstacle = new ArrayList<Obstacle>();
         sortObstacle.addAll(listObstacle);
@@ -133,17 +143,14 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // Que faire quand le surface change ? (L'utilisateur tourne son téléphone par exemple)
-        //Log.i("Test3", "");
-
-    }
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
 
+    //Appeler lorsque l'activité passe au premer plan
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
-        //Log.i("Test2", ""+mSurfaceHolder.equals(holder));
+        //Si le jeu n'a pas encore été lancé on initialise les variables
         if(!gameRunning) {
 
             listObstacle = new ArrayList<Obstacle>();
@@ -172,10 +179,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             }
             gameRunning = true;
         }
-
-
     }
 
+    //Permet de relancer le dessin et l'avancement des blocs et de la balle
     public void resumeDrawing(){
         if(gameRunning) {
             for (Obstacle obstacle : listObstacle) {
@@ -189,6 +195,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+    //Permet de relancer le dessin et l'avancement des blocs et de la balle
     public void stopDrawing(){
         if(mThread!=null)
             mThread.keepDrawing = false;
@@ -198,10 +205,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 obstacle.stopMoving = true;
             }
         }
-        //obstacle.keepRunning = false;
 
     }
 
+    //Permet de completement arrêter les processus de dessin ldavancement des blocs et de la balle
     public void stopRunning(){
         if(listObstacle != null && !listObstacle.isEmpty()) {
             int i = 0;
@@ -219,6 +226,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
+    //Permet d'augmenter le nombre de lignes d'obstacles de 1
     public void difficultyUp(){
         stopDrawing();
         stopRunning();
@@ -247,26 +255,28 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         mThread = new DrawingThread();
         mThread.keepDrawing = true;
         mThread.start();
-
     }
 
+    //Permet d'arreter le dessin et etc. lorsque MainActivity passe en arrière plan
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         if(mThread != null) {
             if (mThread.keepDrawing)
                 stopDrawing();
         }
-        //Log.i("Test4", "");
-
     }
 
+    //Fonction permettant de dessiner sur la surface
     private void drawStuff(Canvas pCanvas) {
 
         Paint paint = new Paint();
+
+        //Dessin du fond
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
         pCanvas.drawPaint(paint);
 
+        //Dessin des obstacles
         paint.setColor(Color.BLACK);
 
         for(Obstacle obstacle : listObstacle) {
@@ -285,6 +295,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             }
         }
 
+        //Dessin de la zone de "touchdown"
         paint.setTextSize(75);
         paint.setColor(Color.BLUE);
         if(goDown) {
@@ -298,7 +309,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 if(scoreMusic.isPlaying())
                     scoreMusic.stop();
                 scoreMusic.start();
-                if(score%7 == 0)
+                if(score%5 == 0)
                     difficultyUp();
             }
 
@@ -313,19 +324,23 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 if(scoreMusic.isPlaying())
                     scoreMusic.stop();
                 scoreMusic.start();
-                if(score%7 == 0)
+                if(score%5 == 0)
                     difficultyUp();
             }
         }
 
+        //Dessin de la balle
         paint.setColor(Color.RED);
         pCanvas.drawCircle(posX, posY, 20, paint);
 
     }
 
+    //Déplacement de la balle d'une unité et gestion des collisions (imparfaites)
     private void moveBall(){
 
         boolean borderStuck = false;
+
+        //Calcul de la nouvele position de la balle
         float newPosX, newPosY, deplacementX, deplacementY = 0;
         deplacementX = xVal * speed;
         deplacementX = Math.round(deplacementX);
@@ -334,6 +349,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         newPosX = posX - deplacementX;
         newPosY = posY + deplacementY;
 
+        //gestion de la collision avec les bords
         if(newPosX >= getWidth()) {
             newPosX = getWidth();
             borderStuck = true;
@@ -350,35 +366,34 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         }
 
+        //Récupération de la ligne d'obstacle la plus proche et de ses blocs
         int numligne = getClosestObstacle(newPosY);
-        //Log.i("moveBall", "N°" + numligne);
         Obstacle obstacle = listObstacle.get(numligne);
         HashMap<Integer, Block> mapBlock = obstacle.getMapBlock();
 
+        //Si la ligne a généré des blocs alors gestion des collisions
         if(mapBlock != null && !mapBlock.isEmpty()) {
 
+            //Possibilité de collision horizontal
             if (!stuckVertical && obstacle.isInRange(newPosY)) {
                 stuckHorizontal = true;
             } else {
                 stuckHorizontal = false;
             }
 
+            //Erreur de collision si le bloc de collision disparait, donc reinitialisation
             if(stuckVertical && blockStuckIndex < obstacle.getOldest())
                 stuckVertical = false;
 
-            //Log.i("moveBall", "stuckHorizontal " + stuckHorizontal);
-            //Log.i("moveBall", "stuckVertical " + stuckVertical);
-
+            //Analyse bloc par bloc
             Set<Map.Entry<Integer, Block>> set = mapBlock.entrySet();
             Iterator<Map.Entry<Integer, Block>> it = set.iterator();
             while(it.hasNext()){
                 Map.Entry<Integer, Block> entry = it.next();
                 Block block = entry.getValue();
                 if (stuckHorizontal) {
+                    //Verification de contact
                     if (block.isInRange(newPosX)) {
-
-                        //Log.i("moveBall", "moveX");
-
                         newPosX = block.closestBorder(newPosX);
                         if (borderStuck) {
                             stopDrawing();
@@ -390,19 +405,20 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                     }
 
                 }else if (stuckVertical) {
+                    //Verification qu'il s'agit du bloc qui a signalé une possible collision
                     if(entry.getKey() == blockStuckIndex) {
+                        //Verification de contact
                         if (block.isInRange(newPosX)) {
                             if (obstacle.isInRange(newPosY)) {
                                 newPosY = obstacle.closestBorder(posY);
-                                //Log.i("moveBall stuckVertical", block.getL() + ": " + posY + "/" + deplacementY);
                             }
-
                         } else {
                             stuckVertical = false;
                         }
                     }
                 }
 
+                //Possibilité de collision vertical
                 if(!stuckVertical&&!stuckHorizontal){
                     if (block.isInRange(newPosX)) {
                         stuckVertical = true;
@@ -415,11 +431,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         posX = newPosX;
         posY = newPosY;
 
-        //Log.i("moveBall", ""+getWidth());
-        //Log.i("moveBall", "posX " + posX);
-        //Log.i("moveBall", "posY " + posY);
     }
 
+    //Récupération des valeurs de déplacements de la balle
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -435,6 +449,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
+    //Processus de rafraichissement de la sruface
     private class DrawingThread extends Thread {
 
         // Utilisé pour arrêter le dessin quand il le faut
@@ -443,6 +458,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         @Override
         public void run() {
 
+            //Rafraichissement tant que keepDrawing = true
             while (keepDrawing) {
                 Canvas canvas = null;
 
