@@ -18,10 +18,8 @@ public class Obstacle extends Thread{
     private int yAxis, spacing, speed, initialBlockL, initialBlockR, ballSize, widthTotal, idAvailable, top, bottom, youngest, oldest;
     public boolean keepRunning, stopMoving, direction;
     private HashMap<Integer, Block> mapBlock;
-    private MySurfaceView parent;
 
-    public Obstacle(int y, int widthT, int bHeight, int ballS, MySurfaceView father){
-        parent = father;
+    public Obstacle(int y, int widthT, int bHeight, int ballS){
         yAxis = y;
         widthTotal = widthT;
         keepRunning = false;

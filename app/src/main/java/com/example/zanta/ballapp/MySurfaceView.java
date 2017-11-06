@@ -160,7 +160,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
 
             for (int i = 1; i < (nbObstacles + 1); i++) {
-                Obstacle obstacle = new Obstacle(yStep * i, getWidth(), height, ballSize, this);
+                Obstacle obstacle = new Obstacle(yStep * i, getWidth(), height, ballSize);
                 obstacle.setDaemon(true);
                 obstacle.keepRunning = true;
                 obstacle.stopMoving = false;
@@ -232,7 +232,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         int height = yStep/2;
 
         for(int i = 1; i<(nbObstacles + 1); i++){
-            Obstacle obstacle = new Obstacle(yStep*i, getWidth(), height, ballSize, this);
+            Obstacle obstacle = new Obstacle(yStep*i, getWidth(), height, ballSize);
             obstacle.setDaemon(true);
             obstacle.keepRunning = true;
             obstacle.stopMoving = false;
