@@ -15,38 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-/*
-    Recommencer le projet avec comme base MapsActivity
-    la page principale permet de lancer le jeu ou réinitialisé le jeu
-    lorsque le jeu est fini on peut proposer via un bouton d'enregistrer le score,
-        se pose alors la question de l'enregistrement du score dans le tableau
-    Elle possèdera une variable qui contiendra l'état du jeu 0,1,2
-    elle permet également via le bouton option "3 petits points" d'aller vers le tableau des scores ou A propos
-    Tous les "enfants" devront avoir une fleche de retour/back button
-    Le tableau des scores et la map échangeront un fichier Hashmap qui contiendra l'id du jour, son pseudo et sa position
-    Ce fichier devra être sauvegarder/charger depuis un xml ou une BD SQL
 
-    Le tableau des scores quand à lui pourra permettre à l'utilisateur 2 actions:
-        - enregistrer son score via un bouton si l'état du jeu est 2 (nécessite des autorisations)
-        - consulter la position d'un joueur sélectionné dans la liste sur une maps
-     Il devra également d'aller vers la map lorsque l'utilisateur sélectionne un joueur dans le tableau
-
-     La map devra afficher la position du joueur sélectionné avec un marqueur qui aura pour titre son pseudo
-
-     A propos, page pour écrire ce que j'ai envie
-
-     Enregistrer un score, devra demander l'autorisation de localisation,
-     en cas de rejet afficher une alertdialog pour expliquer la necessité de l'autorisation et revenir sur le tableau
-     en cas d'accord avoir un edittext pour saisir le pseudo
-
-     INTENT:
-        De main à tableau, l'état du jeu
-        tableau à map, l'id du joueur à localiser
-
-     QUESTION
-        Création d'une nouvelle activité pour l'ajout d'un pseudo&score dans le tableau?
-        Persistence des pseudo, modification des scores des pseudo autorisé en cas de sélection d'un pseudo existant?
- */
 public class MainActivity extends AppCompatActivity {
 
     private SensorEventListener sView;
