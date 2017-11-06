@@ -28,12 +28,10 @@ import java.util.Set;
 
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener {
 
-    float posX, posY, speed;
-    int xVal, yVal, yStep, score, nbObstacles, ballSize;
-    boolean stuckHorizontal ,stuckVertical;
-    int blockStuckIndex;
-    boolean goDown;
-    boolean gameRunning = false;
+    private float posX, posY, speed;
+    private int xVal, yVal, yStep, score, nbObstacles, ballSize, blockStuckIndex;
+    private boolean stuckHorizontal ,stuckVertical, goDown;
+    private boolean gameRunning = false;
     private MediaPlayer mainMusic, scoreMusic, deathMusic;
     private Intent gameOverIntent;
     private Context myContext;
