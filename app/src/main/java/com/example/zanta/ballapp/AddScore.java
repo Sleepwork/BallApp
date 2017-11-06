@@ -29,8 +29,8 @@ public class AddScore extends Activity implements LocationListener{
     private final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btCancel;
     private Button btSave;
-    private TextView editPseudo;
-    private TextView editScore;
+    private EditText editPseudo;
+    private EditText editScore;
     private Activity me = this;
 
     @Override
