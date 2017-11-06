@@ -126,6 +126,7 @@ public class AddScore extends Activity implements LocationListener{
             editScore.setText(""+score);
             intent.removeExtra("score");
         }
+        editScore.setEnabled(false);
     }
 
     @Override
