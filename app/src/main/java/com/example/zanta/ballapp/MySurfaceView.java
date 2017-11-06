@@ -447,19 +447,14 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 Canvas canvas = null;
 
                 try {
-                    // On récupère le canvas pour dessiner dessus
                     canvas = mSurfaceHolder.lockCanvas();
-
                     // On s'assure qu'aucun autre thread n'accède au holder
                     synchronized (mSurfaceHolder) {
                         // Et on dessine
                         drawStuff(canvas);
                         moveBall();
-                        //Log.i("drawing", ""+ gameRunning);
-
                     }
                 } finally {
-                    // Notre dessin fini, on relâche le Canvas pour que le dessin s'affiche
                     if (canvas != null)
                         mSurfaceHolder.unlockCanvasAndPost(canvas);
                 }
