@@ -156,7 +156,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             stuckVertical = false;
             blockStuckIndex = -1;
             goDown = true;
-            nbObstacles = 4;
+            nbObstacles = 1;
             score = 0;
             posX = getWidth()/2;
             posY = ballSize;
