@@ -26,7 +26,7 @@ public class AddScore extends Activity implements LocationListener{
     private LocationManager locationManager;
     private Location mLastKnownLocation;
     private String locationProvider;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btCancel;
     private Button btSave;
     private TextView editPseudo;
